@@ -15,8 +15,8 @@ Projeyi canlı olarak deneyimlemek için aşağıdaki bağlantıyı ziyaret edeb
 ➡️ **[https://https://devflowgithub.vercel.app/](https://devflowgithub.vercel.app/)** ⬅️
 
 ## Önizleme
+<img width="952" height="733" alt="image" src="https://github.com/user-attachments/assets/47953ee3-3ceb-4567-bebb-5010d5e70640" />
 
-*(**Not:** Bu bölümü projenizin gerçek bir ekran görüntüsü veya GIF'i ile güncelleyin.)*
 
 ## Neden DevFlow?
 
