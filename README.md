@@ -1,9 +1,3 @@
-Elbette, `README.md` dosyasını, hem Türkçe hem de İngilizce içeriği barındıracak şekilde aşağıda hazırladım.
-
-Bunu kopyalayıp `README.md` dosyanıza yapıştırabilirsiniz.
-
------
-
 # DevFlow - Geliştirici Verimlilik Paneli (TR/EN)
 
 [🇹🇷 Türkçe](https://www.google.com/search?q=%23devflow---geli%C5%9Ftirici-verimlilik-paneli) | [🇬🇧 English](https://www.google.com/search?q=%23devflow---developer-productivity-dashboard)
