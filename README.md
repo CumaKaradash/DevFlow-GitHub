@@ -22,7 +22,7 @@ Projeyi canlı olarak deneyimlemek için aşağıdaki bağlantıyı ziyaret edeb
 
 ## Önizleme
 
-\<img width="952" height="733" alt="image" src="https://github.com/user-attachments/assets/47953ee3-3ceb-4567-bebb-5010d5e70640" /\>
+<img width="952" height="734" alt="Ekran görüntüsü 2025-10-19 045346" src="https://github.com/user-attachments/assets/2288cda1-522a-422f-85f7-308d37bca7b8" />
 
 ## Neden DevFlow?
 
@@ -165,7 +165,7 @@ You can visit the link below to experience the project live:
 
 ## Preview
 
-\<img width="952" height="733" alt="image" src="[https://github.com/user-attachments/assets/47953ee3-3ceb-4567-bebb-5010d5e70640](https://github.com/user-attachments/assets/47953ee3-3ceb-4567-bebb-5010d5e70640)" /\>
+<img width="952" height="734" alt="Ekran görüntüsü 2025-10-19 045346" src="https://github.com/user-attachments/assets/026a15ec-50a9-489a-ad20-fac7fe042e1f" />
 
 ## Why DevFlow?
 
