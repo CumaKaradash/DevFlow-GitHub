@@ -33,7 +33,7 @@ export function GitHubActivityWidget() {
     isLoading: userLoading,
   } = useSWR(githubUsername ? `https://api.github.com/users/${githubUsername}` : null, fetcher, {
     revalidateOnFocus: false,
-    refreshInterval: 300000,
+    refreshInterval: 7200000, // 2 hours in milliseconds
   })
 
   const {
@@ -42,7 +42,7 @@ export function GitHubActivityWidget() {
     isLoading: reposLoading,
   } = useSWR(githubUsername ? `https://api.github.com/users/${githubUsername}/repos?per_page=100` : null, fetcher, {
     revalidateOnFocus: false,
-    refreshInterval: 300000,
+    refreshInterval: 7200000, // 2 hours in milliseconds
   })
 
   useEffect(() => {
