@@ -53,18 +53,44 @@ export function DailyGoals() {
     }
   }
 
+  // Get today's date at start of day for comparison
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const todayStart = today.getTime()
+  
   const todayGoals = goals.filter((goal) => {
-    const goalDate = new Date(goal.createdAt)
-    const today = new Date()
+    const goalDate = goal.createdAt ? new Date(goal.createdAt) : new Date()
+    const goalTime = goalDate.getTime()
+    
+    // Include goals that are either:
+    // 1. Created today, or
+    // 2. Not completed and created before today
     return (
-      goalDate.getDate() === today.getDate() &&
-      goalDate.getMonth() === today.getMonth() &&
-      goalDate.getFullYear() === today.getFullYear()
+      // Goals created today
+      (goalTime >= todayStart) || 
+      // Or incomplete goals from previous days
+      (!goal.completed && goalTime < todayStart)
     )
   })
+  
+  // Sort goals: today's goals first, then incomplete from previous days
+  const sortedGoals = [...todayGoals].sort((a, b) => {
+    const aDate = a.createdAt ? new Date(a.createdAt).getTime() : 0
+    const bDate = b.createdAt ? new Date(b.createdAt).getTime() : 0
+    
+    // Incomplete goals from previous days go to the bottom
+    if (aDate < todayStart && !a.completed) return 1
+    if (bDate < todayStart && !b.completed) return -1
+    
+    // Sort by completion status (uncompleted first) and then by date (newest first)
+    if (a.completed === b.completed) {
+      return bDate - aDate
+    }
+    return a.completed ? 1 : -1
+  })
 
-  const completedCount = todayGoals.filter((g) => g.completed).length
-  const totalCount = todayGoals.length
+  const completedCount = sortedGoals.filter((g) => g.completed).length
+  const totalCount = sortedGoals.length
 
   return (
     <Card className="border border-border shadow-lg transition-theme md:col-span-2 lg:col-span-1">
@@ -82,7 +108,7 @@ export function DailyGoals() {
             <p className="text-center text-sm text-muted-foreground py-4">No goals yet. Add one to get started!</p>
           )}
 
-          {todayGoals.map((goal) => {
+          {sortedGoals.map((goal) => {
             const Icon = categoryIcons[goal.category]
             return (
               <div
@@ -94,6 +120,11 @@ export function DailyGoals() {
                   <p className={`text-sm ${goal.completed ? "line-through text-muted-foreground" : ""}`}>
                     {goal.title}
                   </p>
+                  {goal.createdAt && new Date(goal.createdAt).getTime() < todayStart && (
+                    <p className="text-xs text-muted-foreground">
+                      From {new Date(goal.createdAt).toLocaleDateString()}
+                    </p>
+                  )}
                 </div>
                 <Badge variant="outline" className={`${categoryColors[goal.category]} shrink-0`}>
                   <Icon className="h-3 w-3 mr-1" />
