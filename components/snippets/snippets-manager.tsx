@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { Plus, Code2, Copy, Trash2, Edit, Check } from "lucide-react"
+import { Plus, Code2, Copy, Trash2, Edit, Check, Search } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 const languages = ["javascript", "typescript", "python", "java", "go", "rust", "html", "css", "sql", "bash", "other"]
@@ -19,6 +19,7 @@ export function SnippetsManager() {
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
   const [copiedId, setCopiedId] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
 
   const [formData, setFormData] = useState({
     title: "",
@@ -89,6 +90,16 @@ export function SnippetsManager() {
     handleCloseDialog()
   }
 
+  const filteredSnippets = snippets.filter((snippet) => {
+    if (!searchQuery) return true
+    const query = searchQuery.toLowerCase()
+    return (
+      snippet.title.toLowerCase().includes(query) ||
+      snippet.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+      snippet.language.toLowerCase().includes(query)
+    )
+  })
+
   const handleCopy = async (code: string, id: string) => {
     await navigator.clipboard.writeText(code)
     setCopiedId(id)
@@ -99,16 +110,27 @@ export function SnippetsManager() {
     <>
       <Card className="border border-border shadow-lg transition-theme md:col-span-2 lg:col-span-3">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Code Snippets</CardTitle>
-            <Button size="sm" onClick={() => handleOpenDialog()}>
-              <Plus className="mr-2 h-4 w-4" />
-              Add Snippet
-            </Button>
+          <div className="flex flex-col space-y-4">
+            <div className="flex items-center justify-between">
+              <CardTitle>Code Snippets</CardTitle>
+              <Button size="sm" onClick={() => handleOpenDialog()}>
+                <Plus className="mr-2 h-4 w-4" />
+                Add Snippet
+              </Button>
+            </div>
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+              <Input
+                placeholder="Search snippets by title or tags..."
+                className="pl-10"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
           </div>
         </CardHeader>
         <CardContent>
-          {snippets.length === 0 ? (
+          {filteredSnippets.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-12 text-center">
               <Code2 className="h-12 w-12 text-muted-foreground mb-4" />
               <p className="text-sm text-muted-foreground mb-2">No snippets yet</p>
@@ -116,7 +138,7 @@ export function SnippetsManager() {
             </div>
           ) : (
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-              {snippets.map((snippet) => (
+              {filteredSnippets.map((snippet) => (
                 <div
                   key={snippet.id}
                   className="flex flex-col rounded-lg border border-border bg-card shadow-sm hover:shadow-lg hover:border-primary/50 transition-all overflow-hidden"
